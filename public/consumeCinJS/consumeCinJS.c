@@ -2,12 +2,8 @@
 #include <string.h>
 
 int main() {
-    // emcc consumeCinJS.c -s WASM=1 -O1 -s EXPORTED_FUNCTIONS="['_main','_getNum','_getDoubleNum','_getStr']" -o consumeCinJS.js\n
+    // emcc consumeCinJS.c -s WASM=1 -O1 -s EXPORTED_FUNCTIONS="['_main','_getDoubleNum','_getStr']" -o consumeCinJS.js
     return 5;
-}
-
-int getNum() {
-    return 55;
 }
 
 int getDoubleNum( int a ) {
@@ -15,7 +11,7 @@ int getDoubleNum( int a ) {
 }
 
 char * getStr(char * name) {
-    char * result = "Salut ";
+    char * result = "Hello ";
     strcat(result, name);
     return result;
 }

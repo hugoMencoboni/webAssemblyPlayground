@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Simple template</title>
+    <script src="consumeCinJS.js"></script>
+  </head>
+  <body>
+    <h1>WebAssembly playground</h1>
+    <button onclick="fireWa()">Fire WA</button>
+    <div id="waInfo"></div>
+    <script>
+      const waInfo = document.getElementById("waInfo");
+      const fireWa = () => { 
+        const text = getStringAssembly("JS"); 
+        waInfo.innerHTML = text;
+      };
+
+      Module['onRuntimeInitialized'] = () => {        
+        getStringAssembly = cwrap('getStr', 'string', ['string']);
+        getDoubleAssembly = cwrap('getDoubleNum', 'number', ['number']);
+
+        console.log(getDoubleAssembly(33));
+      }
+    </script>
+  </body>
+</html>
