@@ -48,7 +48,7 @@ struct ColorAnimation mainColorAnimation;
 
 int getRandom(int max)
 {
-    return (rand() % max);
+    return (rand() % (max + 1));
 }
 
 void initCircles(int maxWidth, int maxHeigth)
@@ -132,17 +132,20 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth)
 struct Color getColor()
 {
     int rDecay = mainColorAnimation.rDirection * mainColorAnimation.rVelocity;
-    if (mainColor.red + rDecay < 0 || mainColor.red + rDecay > 255) {
+    if (mainColor.red + rDecay < 0 || mainColor.red + rDecay > 255)
+    {
         mainColorAnimation.rDirection *= -1;
     }
 
     int gDecay = mainColorAnimation.gDirection * mainColorAnimation.gVelocity;
-    if (mainColor.green + gDecay < 0 || mainColor.green + gDecay > 255) {
+    if (mainColor.green + gDecay < 0 || mainColor.green + gDecay > 255)
+    {
         mainColorAnimation.gDirection *= -1;
     }
 
     int bDecay = mainColorAnimation.bDirection * mainColorAnimation.bVelocity;
-    if (mainColor.blue + bDecay < 0 || mainColor.blue + bDecay > 255) {
+    if (mainColor.blue + bDecay < 0 || mainColor.blue + bDecay > 255)
+    {
         mainColorAnimation.bDirection *= -1;
     }
 
