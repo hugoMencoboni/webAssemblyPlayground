@@ -7,12 +7,12 @@
 
 struct Circle
 {
-    int x;
-    int y;
-    int r;
-    int cr;
-    int cg;
-    int cb;
+    float x;
+    float y;
+    float r;
+    float cr;
+    float cg;
+    float cb;
     float ca;
 };
 
@@ -20,7 +20,7 @@ struct CircleAnimation
 {
     int xVelocity;
     int yVelocity;
-    
+
     int xDirection;
     int yDirection;
 };
@@ -42,14 +42,14 @@ void initCircles(int maxWidth, int maxHeigth)
         circles[i].r = r;
         int x = getRandom(maxWidth - r);
         int y = getRandom(maxHeigth - r);
-        circles[i].x = x < r ? x + r : x; 
+        circles[i].x = x < r ? x + r : x;
         circles[i].y = y < r ? y + r : y;
 
         // Color
         circles[i].cr = getRandom(255);
         circles[i].cg = getRandom(255);
         circles[i].cb = getRandom(255);
-        circles[i].ca = 0.75;
+        circles[i].ca = 1.0 / (1 + getRandom(3));
 
         // Animation
         circlesAnimations[i].xVelocity = getRandom(10) + 1;
@@ -65,7 +65,8 @@ int main()
     EM_ASM({ onWALoaded(); });
 }
 
-void initDrawing(int canvasWidth, int canvasHeigth) {
+void initDrawing(int canvasWidth, int canvasHeigth)
+{
     int circleStructSize = 7;
     initCircles(canvasWidth, canvasHeigth);
     EM_ASM({ render($0, $1); }, NUM_CIRCLES * circleStructSize, circleStructSize);
@@ -75,11 +76,13 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth)
 {
     for (int i = 0; i < NUM_CIRCLES; i++)
     {
-        if(circles[i].x + circles[i].r > canvasWidth || circles[i].x - circles[i].r < 0) {
+        if (circles[i].x + circles[i].r > canvasWidth || circles[i].x - circles[i].r < 0)
+        {
             circlesAnimations[i].xDirection *= -1;
         }
-        
-        if(circles[i].y + circles[i].r > canvasHeigth || circles[i].y - circles[i].r < 0) {
+
+        if (circles[i].y + circles[i].r > canvasHeigth || circles[i].y - circles[i].r < 0)
+        {
             circlesAnimations[i].yDirection *= -1;
         }
 

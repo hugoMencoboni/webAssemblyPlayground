@@ -34,7 +34,7 @@
     };
 
     const render = (dataLength, circleStructSize) => {
-      const circlesDatas = new Int32Array(Module.HEAP32.buffer, _getCircles(canvas.width, canvas.height), dataLength);
+      const circlesDatas = new Float32Array(Module.HEAP32.buffer, _getCircles(canvas.width, canvas.height), dataLength);
       canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < circlesDatas.length; i += circleStructSize) {
@@ -44,7 +44,7 @@
         const cr = circlesDatas[i + 3];
         const cb = circlesDatas[i + 4];
         const cg = circlesDatas[i + 5];
-        const ca = 0.75;
+        const ca = circlesDatas[i + 6];
         drawCircles(x, y, r, `rgba(${cr},${cg},${cb},${ca})`);
       }
 
