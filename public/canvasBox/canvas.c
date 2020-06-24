@@ -5,15 +5,19 @@
 
 #define NUM_CIRCLES 500
 
+struct Color {
+    float red;
+    float green;
+    float blue;
+    float alpha;
+};
+
 struct Circle
 {
     float x;
     float y;
     float r;
-    float cr;
-    float cg;
-    float cb;
-    float ca;
+    struct Color color;
 };
 
 struct CircleAnimation
@@ -46,10 +50,10 @@ void initCircles(int maxWidth, int maxHeigth)
         circles[i].y = y < r ? y + r : y;
 
         // Color
-        circles[i].cr = getRandom(255);
-        circles[i].cg = getRandom(255);
-        circles[i].cb = getRandom(255);
-        circles[i].ca = 1.0 / (1 + getRandom(3));
+        circles[i].color.red = getRandom(255);
+        circles[i].color.green = getRandom(255);
+        circles[i].color.blue = getRandom(255);
+        circles[i].color.alpha = 1.0 / (1 + getRandom(3));
 
         // Animation
         circlesAnimations[i].xVelocity = getRandom(10) + 1;
