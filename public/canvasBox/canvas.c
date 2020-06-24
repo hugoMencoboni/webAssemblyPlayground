@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <emscripten.h>
 
-#define NUM_CIRCLES 200
+#define NUM_CIRCLES 500
 
 struct Circle
 {
@@ -33,15 +33,15 @@ int getRandom(int max)
     return (rand() % max);
 }
 
-void initCircles()
+void initCircles(int maxWidth, int maxHeigth)
 {
     srand(time(NULL));
     for (int i = 0; i < NUM_CIRCLES; i++)
     {
         int r = getRandom(50);
         circles[i].r = r;
-        int x = getRandom(2000 - r); // TODO: passer la width du canvas
-        int y = getRandom(2000 - r); // TODO: passer la width du canvas
+        int x = getRandom(maxWidth - r);
+        int y = getRandom(maxHeigth - r);
         circles[i].x = x < r ? x + r : x; 
         circles[i].y = y < r ? y + r : y;
 
@@ -52,8 +52,8 @@ void initCircles()
         circles[i].ca = 0.75;
 
         // Animation
-        circlesAnimations[i].xVelocity = getRandom(10);
-        circlesAnimations[i].yVelocity = getRandom(10);
+        circlesAnimations[i].xVelocity = getRandom(10) + 1;
+        circlesAnimations[i].yVelocity = getRandom(10) + 1;
         circlesAnimations[i].xDirection = 1 - 2 * getRandom(1);
         circlesAnimations[i].yDirection = 1 - 2 * getRandom(1);
     }
@@ -61,9 +61,13 @@ void initCircles()
 
 int main()
 {
-    printf("Rendering");
-    initCircles();
+    printf("WA Loaded");
+    EM_ASM({ onWALoaded(); });
+}
+
+void initDrawing(int canvasWidth, int canvasHeigth) {
     int circleStructSize = 7;
+    initCircles(canvasWidth, canvasHeigth);
     EM_ASM({ render($0, $1); }, NUM_CIRCLES * circleStructSize, circleStructSize);
 }
 

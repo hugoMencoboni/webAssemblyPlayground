@@ -1249,11 +1249,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5255408,
+    STACK_BASE = 5268624,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 12528,
-    DYNAMIC_BASE = 5255408,
-    DYNAMICTOP_PTR = 12368;
+    STACK_MAX = 25744,
+    DYNAMIC_BASE = 5268624,
+    DYNAMICTOP_PTR = 25584;
 
 
 
@@ -1697,7 +1697,8 @@ var tempI64;
 // === Body ===
 
 var ASM_CONSTS = {
-  1034: function($0, $1) {render($0, $1);}
+  1034: function() {onWALoaded();},  
+ 1052: function($0, $1) {render($0, $1);}
 };
 
 function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
@@ -1707,7 +1708,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
 
 
 
-// STATICTOP = STATIC_BASE + 11504;
+// STATICTOP = STATIC_BASE + 24720;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -1755,7 +1756,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 12368;
+      return 25584;
     }
 
   function _emscripten_memcpy_big(dest, src, num) {
@@ -1939,6 +1940,11 @@ var asm = createWasm();
 /** @type {function(...*):?} */
 var ___wasm_call_ctors = Module["___wasm_call_ctors"] = function() {
   return (___wasm_call_ctors = Module["___wasm_call_ctors"] = Module["asm"]["__wasm_call_ctors"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _initDrawing = Module["_initDrawing"] = function() {
+  return (_initDrawing = Module["_initDrawing"] = Module["asm"]["initDrawing"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */

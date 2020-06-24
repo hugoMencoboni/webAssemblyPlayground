@@ -4,7 +4,7 @@ Contient :
 1. un dossier pour la consommation de JS dans du C.
 1. un dossier pour la consommation de C dans du JS.
 1. un dossier pour la consommation de WASM sans l'utilisation d'**[emscripten][emscriptenLink]**.
-1. un dossier comparant les performances de deux fonctions de determination de nombres premier, l'une en JS, l'autre en Assembly.
+1. un dossier comparant les performances entre JS et WebAssembly.
 1. un petit projet d'animation de formes via canvas mélangeant JS et WA.
 
 ## Mise en place
@@ -37,5 +37,8 @@ Les WA apportent plusieurs interet :
 - elles peuvent permettre la consommation de code/librairies pré-existant en C et ayant déjà fait leurs preuves.
 - elles peuvent donner accès à de meilleurs performances lors de calculs numériques.
 
+Pour plus de détail : **[WebAssembly: How and why][webassemblyLink]**.
+
 [emscriptenLink]: https://emscripten.org/docs/getting_started/downloads.html
 [emscriptenInstallLink]: https://emscripten.org/docs/getting_started/downloads.html
+[webassemblyLink]: https://blog.logrocket.com/webassembly-how-and-why-559b7f96cd71/
