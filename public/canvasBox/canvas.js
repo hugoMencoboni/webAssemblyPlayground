@@ -1953,8 +1953,8 @@ var _getCircles = Module["_getCircles"] = function() {
 };
 
 /** @type {function(...*):?} */
-var _getColor = Module["_getColor"] = function() {
-  return (_getColor = Module["_getColor"] = Module["asm"]["getColor"]).apply(null, arguments);
+var _getMainColor = Module["_getMainColor"] = function() {
+  return (_getMainColor = Module["_getMainColor"] = Module["asm"]["getMainColor"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */

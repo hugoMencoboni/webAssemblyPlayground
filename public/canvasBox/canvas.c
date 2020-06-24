@@ -129,7 +129,7 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth)
     return circles;
 }
 
-struct Color getColor()
+struct Color getMainColor()
 {
     int rDecay = mainColorAnimation.rDirection * mainColorAnimation.rVelocity;
     if (mainColor.red + rDecay < 0 || mainColor.red + rDecay > 255)
