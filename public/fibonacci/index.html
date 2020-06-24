@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Perf test</title>
+  <script src="fibonacci.js"></script>
+</head>
+
+<body>
+  <h1>Test performances on recursive fibonacci function</h1>
+  <div style="color: red;">Warning with the iteration number, try with a value between 20 and 40.</div>
+  <input id="interationNumber" type="number" value="30" min="0" max="50" />
+  <button onclick="tryTestPerf()">Test perfs</button>
+  <div id="perfResult"></div>
+  <script>
+    const perfResult = document.getElementById("perfResult");
+
+    const fib = n => {
+      if (n < 2) {
+        return n;
+      } else {
+        return fib(n - 1) + fib(n - 2);
+      }
+    };
+
+    const testPerf = (iterations, callback) => {
+      const t1 = performance.now();
+      for (let i = 0; i < iterations; i++) {
+        callback(i);
+      }
+      const perfTime = performance.now() - t1;
+
+      return Math.round(perfTime) / 1000;
+    }
+
+    const tryTestPerf = () => {
+      const iterations = +document.getElementById("interationNumber").value;
+
+      if (!isNaN(iterations)) {
+        const jsPerf = testPerf(iterations, fib);
+        const waPerf = testPerf(iterations, _fib);
+        perfResult.innerText = `For ${iterations} iterations - JS: ${jsPerf} s, WA: ${waPerf} s`;
+      } else {
+        perfResult.innerText = "Warning : enter a number";
+      }
+    }
+
+    Module['onRuntimeInitialized'] = () => {
+      const iterations = 10;
+      const jsPerf = testPerf(iterations, fib, "JS isPrime");
+      const waPerf = testPerf(iterations, _fib, "WA isPrime");
+      console.log(`For ${iterations} iterations - JS: ${jsPerf} s, WA: ${waPerf} s`);
+    }
+  </script>
+</body>
+
+</html>

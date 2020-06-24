@@ -1249,11 +1249,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5244688,
+    STACK_BASE = 5244656,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 1808,
-    DYNAMIC_BASE = 5244688,
-    DYNAMICTOP_PTR = 1648;
+    STACK_MAX = 1776,
+    DYNAMIC_BASE = 5244656,
+    DYNAMICTOP_PTR = 1616;
 
 
 
@@ -1565,7 +1565,7 @@ function isFileURI(filename) {
 
 
 
-var wasmBinaryFile = 'isPrime.wasm';
+var wasmBinaryFile = 'fibonacci.wasm';
 if (!isDataURI(wasmBinaryFile)) {
   wasmBinaryFile = locateFile(wasmBinaryFile);
 }
@@ -1699,11 +1699,11 @@ var tempI64;
 var ASM_CONSTS = {
   
 };
-function isPrimeJS(num){ for(let i = 2; i < num; i++) { if(!num % i) { return false; } } return num !== 0 && num !== 1; }
+function fibJS(n){ if (n < 2) { return n; } else { return fibJS(n-1) + fibJS(n-2); } }
 
 
 
-// STATICTOP = STATIC_BASE + 784;
+// STATICTOP = STATIC_BASE + 752;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -1751,7 +1751,7 @@ function isPrimeJS(num){ for(let i = 2; i < num; i++) { if(!num % i) { return fa
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 1648;
+      return 1616;
     }
 
   
@@ -1795,7 +1795,7 @@ function intArrayToString(array) {
 
 
 var asmGlobalArg = {};
-var asmLibraryArg = { "emscripten_get_sbrk_ptr": _emscripten_get_sbrk_ptr, "emscripten_resize_heap": _emscripten_resize_heap, "isPrimeJS": isPrimeJS, "memory": wasmMemory, "table": wasmTable };
+var asmLibraryArg = { "emscripten_get_sbrk_ptr": _emscripten_get_sbrk_ptr, "emscripten_resize_heap": _emscripten_resize_heap, "fibJS": fibJS, "memory": wasmMemory, "table": wasmTable };
 var asm = createWasm();
 /** @type {function(...*):?} */
 var ___wasm_call_ctors = Module["___wasm_call_ctors"] = function() {
@@ -1803,13 +1803,13 @@ var ___wasm_call_ctors = Module["___wasm_call_ctors"] = function() {
 };
 
 /** @type {function(...*):?} */
-var ___em_js__isPrimeJS = Module["___em_js__isPrimeJS"] = function() {
-  return (___em_js__isPrimeJS = Module["___em_js__isPrimeJS"] = Module["asm"]["__em_js__isPrimeJS"]).apply(null, arguments);
+var ___em_js__fibJS = Module["___em_js__fibJS"] = function() {
+  return (___em_js__fibJS = Module["___em_js__fibJS"] = Module["asm"]["__em_js__fibJS"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */
-var _isPrime = Module["_isPrime"] = function() {
-  return (_isPrime = Module["_isPrime"] = Module["asm"]["isPrime"]).apply(null, arguments);
+var _fib = Module["_fib"] = function() {
+  return (_fib = Module["_fib"] = Module["asm"]["fib"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */
