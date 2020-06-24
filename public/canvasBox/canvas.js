@@ -1249,11 +1249,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5268624,
+    STACK_BASE = 5268672,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 25744,
-    DYNAMIC_BASE = 5268624,
-    DYNAMICTOP_PTR = 25584;
+    STACK_MAX = 25792,
+    DYNAMIC_BASE = 5268672,
+    DYNAMICTOP_PTR = 25632;
 
 
 
@@ -1698,7 +1698,7 @@ var tempI64;
 
 var ASM_CONSTS = {
   1034: function() {onWALoaded();},  
- 1052: function($0, $1) {render($0, $1);}
+ 1052: function($0, $1, $2) {render($0, $1, $2);}
 };
 
 function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
@@ -1708,7 +1708,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
 
 
 
-// STATICTOP = STATIC_BASE + 24720;
+// STATICTOP = STATIC_BASE + 24768;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -1756,7 +1756,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 25584;
+      return 25632;
     }
 
   function _emscripten_memcpy_big(dest, src, num) {
@@ -1950,6 +1950,11 @@ var _initDrawing = Module["_initDrawing"] = function() {
 /** @type {function(...*):?} */
 var _getCircles = Module["_getCircles"] = function() {
   return (_getCircles = Module["_getCircles"] = Module["asm"]["getCircles"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _getColor = Module["_getColor"] = function() {
+  return (_getColor = Module["_getColor"] = Module["asm"]["getColor"]).apply(null, arguments);
 };
 
 /** @type {function(...*):?} */

@@ -29,13 +29,23 @@
       canvasCtx.fill();
     }
 
+    const drawRectangle = (x, y, w, h, color) => {
+      canvasCtx.beginPath();
+      canvasCtx.fillStyle = color;
+      canvasCtx.fillRect(x, y, w, h);
+    }
+
     const onWALoaded = () => {
       _initDrawing(canvas.width, canvas.height);
     };
 
-    const render = (dataLength, circleStructSize) => {
-      const circlesDatas = new Float32Array(Module.HEAP32.buffer, _getCircles(canvas.width, canvas.height), dataLength);
+    const render = (circleDataLength, circleStructSize, colorStructSize) => {
+      const mainColorDatas = new Float32Array(Module.HEAP32.buffer, _getColor(), colorStructSize);
+      const circlesDatas = new Float32Array(Module.HEAP32.buffer, _getCircles(canvas.width, canvas.height), circleDataLength);
       canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const backgroundColor = `rgba(${mainColorDatas[0]},${mainColorDatas[1]},${mainColorDatas[2]},${mainColorDatas[3]})`;
+      drawRectangle(0, 0, canvas.width, canvas.height, backgroundColor);
 
       for (let i = 0; i < circlesDatas.length; i += circleStructSize) {
         const x = circlesDatas[i];
@@ -49,7 +59,7 @@
       }
 
       window.requestAnimationFrame(() => {
-        render(dataLength, circleStructSize);
+        render(circleDataLength, circleStructSize);
       });
     }
   </script>

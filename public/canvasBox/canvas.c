@@ -5,11 +5,23 @@
 
 #define NUM_CIRCLES 500
 
-struct Color {
+struct Color
+{
     float red;
     float green;
     float blue;
     float alpha;
+};
+
+struct ColorAnimation
+{
+    int rVelocity;
+    int gVelocity;
+    int bVelocity;
+
+    int rDirection;
+    int gDirection;
+    int bDirection;
 };
 
 struct Circle
@@ -31,6 +43,8 @@ struct CircleAnimation
 
 struct Circle circles[NUM_CIRCLES];
 struct CircleAnimation circlesAnimations[NUM_CIRCLES];
+struct Color mainColor;
+struct ColorAnimation mainColorAnimation;
 
 int getRandom(int max)
 {
@@ -39,7 +53,6 @@ int getRandom(int max)
 
 void initCircles(int maxWidth, int maxHeigth)
 {
-    srand(time(NULL));
     for (int i = 0; i < NUM_CIRCLES; i++)
     {
         int r = getRandom(50);
@@ -63,17 +76,36 @@ void initCircles(int maxWidth, int maxHeigth)
     }
 }
 
+void initMainColor()
+{
+    mainColor.red = getRandom(255);
+    mainColor.green = getRandom(255);
+    mainColor.blue = getRandom(255);
+    mainColor.alpha = 0.5;
+
+    mainColorAnimation.rVelocity = getRandom(2);
+    mainColorAnimation.gVelocity = getRandom(2);
+    mainColorAnimation.bVelocity = getRandom(2);
+
+    mainColorAnimation.rDirection = 1;
+    mainColorAnimation.gDirection = 1;
+    mainColorAnimation.bDirection = 1;
+}
+
 int main()
 {
     printf("WA Loaded");
+    srand(time(NULL));
     EM_ASM({ onWALoaded(); });
 }
 
 void initDrawing(int canvasWidth, int canvasHeigth)
 {
     int circleStructSize = 7;
+    int colorStructSize = 4;
+    initMainColor();
     initCircles(canvasWidth, canvasHeigth);
-    EM_ASM({ render($0, $1); }, NUM_CIRCLES * circleStructSize, circleStructSize);
+    EM_ASM({ render($0, $1, $2); }, NUM_CIRCLES * circleStructSize, circleStructSize, colorStructSize);
 }
 
 struct Circle *getCircles(int canvasWidth, int canvasHeigth)
@@ -95,4 +127,28 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth)
     }
 
     return circles;
+}
+
+struct Color getColor()
+{
+    int rDecay = mainColorAnimation.rDirection * mainColorAnimation.rVelocity;
+    if (mainColor.red + rDecay < 0 || mainColor.red + rDecay > 255) {
+        mainColorAnimation.rDirection *= -1;
+    }
+
+    int gDecay = mainColorAnimation.gDirection * mainColorAnimation.gVelocity;
+    if (mainColor.green + gDecay < 0 || mainColor.green + gDecay > 255) {
+        mainColorAnimation.gDirection *= -1;
+    }
+
+    int bDecay = mainColorAnimation.bDirection * mainColorAnimation.bVelocity;
+    if (mainColor.blue + bDecay < 0 || mainColor.blue + bDecay > 255) {
+        mainColorAnimation.bDirection *= -1;
+    }
+
+    mainColor.red += mainColorAnimation.rDirection * mainColorAnimation.rVelocity;
+    mainColor.green += mainColorAnimation.gDirection * mainColorAnimation.gVelocity;
+    mainColor.blue += mainColorAnimation.bDirection * mainColorAnimation.bVelocity;
+
+    return mainColor;
 }
