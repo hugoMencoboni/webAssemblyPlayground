@@ -16,3 +16,7 @@ int fib(int n) {
         return fib(n-1) + fib(n-2);
     }
 }
+
+int fibJSinWA(int n) {
+    return fibJS(n);
+}

@@ -40,7 +40,8 @@
       if (!isNaN(iterations)) {
         const jsPerf = testPerf(iterations, fib);
         const waPerf = testPerf(iterations, _fib);
-        perfResult.innerText = `For ${iterations} iterations - JS: ${jsPerf} s, WA: ${waPerf} s`;
+        const waJSPerf = testPerf(iterations, _fibJSinWA);
+        perfResult.innerText = `For ${iterations} iterations - JS: ${jsPerf} s, JS used in WA: ${waJSPerf} s, WA: ${waPerf} s`;
       } else {
         perfResult.innerText = "Warning : enter a number";
       }

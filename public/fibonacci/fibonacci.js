@@ -1813,6 +1813,11 @@ var _fib = Module["_fib"] = function() {
 };
 
 /** @type {function(...*):?} */
+var _fibJSinWA = Module["_fibJSinWA"] = function() {
+  return (_fibJSinWA = Module["_fibJSinWA"] = Module["asm"]["fibJSinWA"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
 var ___errno_location = Module["___errno_location"] = function() {
   return (___errno_location = Module["___errno_location"] = Module["asm"]["__errno_location"]).apply(null, arguments);
 };
