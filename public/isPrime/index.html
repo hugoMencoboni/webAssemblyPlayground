@@ -2,12 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Simple template</title>
+    <title>Perf test</title>
+    <script src="isPrime.js"></script>
   </head>
   <body>
-    <h1>WebAssembly playground</h1>
-    <script src="isPrime.js"></script>
+    <h1>Test performances</h1>
+    <input id="interationNumber" type="number" value="10000"/>
+    <button onclick="tryTestPerf()">Test perfs</button>
+    <div id="perfResult"></div>
     <script>
+      const perfResult = document.getElementById("perfResult");
+
       const isPrime = num => {
         for(let i = 2; i < num; i++) {
           if(num % i === 0) {
@@ -18,19 +23,33 @@
         return num !== 0 && num !== 1;
       };
 
-      const testPerf = (iterations, callback, fctName) => {
+      const testPerf = (iterations, callback) => {
         const t1 = performance.now();
           for(let i = 0; i < iterations; i++) {
             callback(i);
         }
         const perfTime = performance.now() - t1;
-        console.log(`${fctName} for ${iterations} iterations : ${Math.round(perfTime)/1000} s`);
+
+        return Math.round(perfTime)/1000;
+      }
+
+      const tryTestPerf = () => {
+        const iterations = +document.getElementById("interationNumber").value;
+
+        if(!isNaN(iterations)) {
+          const jsPerf = testPerf(iterations, isPrime);
+          const waPerf = testPerf(iterations, _isPrime);
+          perfResult.innerText = `For ${iterations} iterations - JS: ${jsPerf} s, WA: ${waPerf} s`;
+        } else {
+          perfResult.innerText = "Warning : enter a number";
+        }
       }
 
       Module['onRuntimeInitialized'] = () => {   
         const iterations = 10000
-        testPerf(iterations, isPrime, "JS isPrime");
-        testPerf(iterations, _isPrime, "WA isPrime");
+        const jsPerf = testPerf(iterations, isPrime, "JS isPrime");
+        const waPerf = testPerf(iterations, _isPrime, "WA isPrime");
+        console.log(`For ${iterations} iterations - JS: ${jsPerf} s, WA: ${waPerf} s`);
       }
     </script>
   </body>
