@@ -5,7 +5,7 @@
  (import "env" "strLog" (func $strLog (param i32 i32)))
  (import "env" "wasmMemory" (memory $0 2))
  (table 0 anyfunc)
- (data (i32.const 16) "Coucou\00")
+ (data (i32.const 16) "Text provenant d'une WA\00")
  (export "memory" (memory $0))
  (export "main" (func $main))
  (export "logStr" (func $logStr))
@@ -16,7 +16,7 @@
  (func $logStr (; 3 ;)
   (call $strLog
    (i32.const 16)
-   (i32.const 6)
+   (i32.const 23)
   )
  )
  (func $multiply (; 4 ;) (param $0 i32) (param $1 i32)

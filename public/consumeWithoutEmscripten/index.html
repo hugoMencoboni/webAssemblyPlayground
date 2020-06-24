@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Simple template</title>
-  </head>
-  <body>
-    <h1>WebAssembly playground</h1>
-    <script>
-      const wasmMemory = new WebAssembly.Memory({ initial: 2});
-      const imports = {
-          env: {
-              wasmMemory: wasmMemory,
-              nbrLog: console.log,              
-              strLog: (offset, length) => {
-                const buffer = new Uint8Array(wasmMemory.buffer, offset, length);
-                const text = new TextDecoder().decode(buffer);
 
-                window.dispatchEvent(new CustomEvent("waEvt", { detail: text }));
-              }
-          }
-      };
+<head>
+  <meta charset="utf-8">
+  <title>Simple template</title>
+</head>
 
-      WebAssembly.instantiateStreaming(fetch('program.wasm'), imports)
-        .then(wa => {
-            console.log("Web assembly loaded !");
-            try {
-              console.log("imports : ");
-              console.log(WebAssembly.Module.imports(wa.module));
-              console.log("exports : ");
-              console.log(WebAssembly.Module.exports(wa.module));
-            } catch(e) {
-              console.error(e);
-            }
+<body>
+  <h1>Consuming WA</h1>
+  <button onclick="fireWa()">Fire WA</button>
+  <div id="waInfo"></div>
+  <script>
+    const waInfo = document.getElementById("waInfo");
+    const fireWa = () => { wa.instance.exports.logStr(); };
 
-            window.wa = wa;
-        });
+    const wasmMemory = new WebAssembly.Memory({ initial: 2 });
+    const jsImports = {
+      env: {
+        wasmMemory: wasmMemory,
+        nbrLog: console.log,
+        strLog: (offset, length) => {
+          const buffer = new Uint8Array(wasmMemory.buffer, offset, length);
+          const text = new TextDecoder().decode(buffer);
 
-      window.addEventListener("waEvt", (arg) => console.log(arg.detail));
-    </script>
-  </body>
+          window.dispatchEvent(new CustomEvent("waEvt", { detail: text }));
+        }
+      }
+    };
+
+    WebAssembly.instantiateStreaming(fetch('program.wasm'), jsImports)
+      .then(wa => {
+        console.log("Web assembly loaded !");
+        try {
+          console.log("imports : ");
+          console.log(WebAssembly.Module.imports(wa.module));
+          console.log("exports : ");
+          console.log(WebAssembly.Module.exports(wa.module));
+        } catch (e) {
+          console.error(e);
+        }
+
+        window.wa = wa;
+      });
+
+    window.addEventListener("waEvt", (arg) => waInfo.innerHTML = arg.detail);
+  </script>
+</body>
+
 </html>
