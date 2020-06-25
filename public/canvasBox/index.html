@@ -68,6 +68,11 @@
       repulsivePointX = -1;
       repulsivePointY = -1;
     };
+    
+    window.onresize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
   </script>
 </body>
 

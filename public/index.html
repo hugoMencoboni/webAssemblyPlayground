@@ -70,7 +70,7 @@
       repulsivePointY = -1;
     };
 
-    loadPopInContent = function() {
+    loadPopInContent = function () {
       const local = window.location.hostname === 'localhost';
       const markdownPath = local ? '/markdownAsHtml' : '../index.html';
       fetch(markdownPath).then(async (res) => {
@@ -79,6 +79,11 @@
         popIn.focus();
       });
     }();
+
+    window.onresize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
   </script>
 </body>
 
