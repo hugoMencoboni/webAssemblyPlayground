@@ -39,11 +39,11 @@ Les WA apportent plusieurs interet :
 
 Pour plus de détail : **[WebAssembly: How and why][webassemblyLink]**.
 
-[JSinCLink]: https://hugomencoboni.github.io/webassemblyplayground/public/consumeCinJS/index.html
-[CinJSLink]: https://hugomencoboni.github.io/webassemblyplayground/public/consumeJSinC/index.html
-[WASMLink]: https://hugomencoboni.github.io/webassemblyplayground/public/consumeWithoutEmscripten/index.html
-[PerfLink]: https://hugomencoboni.github.io/webassemblyplayground/public/fibonacci/index.html
-[CanvasLink]: https://hugomencoboni.github.io/webassemblyplayground/public/canvasBox/index.html
+[JSinCLink]: https://hugomencoboni.github.io/webAssemblyPlayground/public/consumeCinJS/index.html
+[CinJSLink]: https://hugomencoboni.github.io/webAssemblyPlayground/public/consumeJSinC/index.html
+[WASMLink]: https://hugomencoboni.github.io/webAssemblyPlayground/public/consumeWithoutEmscripten/index.html
+[PerfLink]: https://hugomencoboni.github.io/webAssemblyPlayground/public/fibonacci/index.html
+[CanvasLink]: https://hugomencoboni.github.io/webAssemblyPlayground/public/canvasBox/index.html
 
 [emscriptenLink]: https://emscripten.org/docs/getting_started/downloads.html
 [emscriptenInstallLink]: https://emscripten.org/docs/getting_started/downloads.html
