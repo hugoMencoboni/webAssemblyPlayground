@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <math.h>
 #include <emscripten.h>
 
 #define NUM_CIRCLES 500
@@ -108,6 +109,7 @@ void initDrawing(int canvasWidth, int canvasHeigth)
     EM_ASM({ render($0, $1, $2); }, NUM_CIRCLES * circleStructSize, circleStructSize, colorStructSize);
 }
 
+
 struct Circle *getCircles(int canvasWidth, int canvasHeigth, int attractivePointX, int attractivePointY)
 {
     for (int i = 0; i < NUM_CIRCLES; i++)
@@ -124,15 +126,22 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth, int attractivePoint
 
         if (attractivePointX != -1 && attractivePointY != -1)
         {
-            float influenceZone = 200;
-            if ((circles[i].x - attractivePointX) * circlesAnimations[i].xDirection > influenceZone)
-            {
-                circlesAnimations[i].xDirection *= -1;
-            }
+            float influenceZone = 300;
+            float diffX = circles[i].x - attractivePointX;
+            float diffY = circles[i].y - attractivePointY;
+            float d = sqrt(diffX * diffX + diffY * diffY);
 
-            if ((circles[i].y - attractivePointY) * circlesAnimations[i].yDirection > influenceZone)
+            if (d > influenceZone)
             {
-                circlesAnimations[i].yDirection *= -1;
+                if (diffX * circlesAnimations[i].xDirection > 0)
+                {
+                    circlesAnimations[i].xDirection *= -1;
+                }
+
+                if (diffY * circlesAnimations[i].yDirection > 0)
+                {
+                    circlesAnimations[i].yDirection *= -1;
+                }
             }
         }
 
