@@ -4,12 +4,13 @@
 <head>
   <meta charset="utf-8">
   <title>Canvas animation</title>
-  <script src="canvas.js"></script>
-  <link rel="stylesheet" type="text/css" href="canvas.css">
+  <script src="canvasBox/canvas.js"></script>
+  <link rel="stylesheet" type="text/css" href="canvasBox/canvas.css">
 </head>
 
 <body>
   <canvas id="canvas"></canvas>
+  <div id="popIn"></div>
   <script>
     const canvas = document.getElementById("canvas");
     canvas.width = window.innerWidth;
@@ -68,6 +69,11 @@
       repulsivePointX = -1;
       repulsivePointY = -1;
     };
+
+    fetch('/markdownAsHtml').then(async (res) => {
+      const popIn = document.getElementById('popIn');
+      popIn.innerHTML = await res.text();
+    });
   </script>
 </body>
 
