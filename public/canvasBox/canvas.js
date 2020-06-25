@@ -1249,11 +1249,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5268672,
+    STACK_BASE = 5277472,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 25792,
-    DYNAMIC_BASE = 5268672,
-    DYNAMICTOP_PTR = 25632;
+    STACK_MAX = 34592,
+    DYNAMIC_BASE = 5277472,
+    DYNAMICTOP_PTR = 34432;
 
 
 
@@ -1708,7 +1708,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
 
 
 
-// STATICTOP = STATIC_BASE + 24768;
+// STATICTOP = STATIC_BASE + 33568;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -1756,7 +1756,7 @@ function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 25632;
+      return 34432;
     }
 
   function _emscripten_memcpy_big(dest, src, num) {

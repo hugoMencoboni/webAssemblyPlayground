@@ -4,7 +4,7 @@
 #include <math.h>
 #include <emscripten.h>
 
-#define NUM_CIRCLES 500
+#define NUM_CIRCLES 700
 
 struct Color
 {
@@ -59,7 +59,7 @@ void initCircles(int maxWidth, int maxHeigth)
 {
     for (int i = 0; i < NUM_CIRCLES; i++)
     {
-        int r = getRandom(50);
+        int r = getRandom(25);
         circles[i].r = r;
         int x = getRandom(maxWidth - r);
         int y = getRandom(maxHeigth - r);
@@ -73,8 +73,8 @@ void initCircles(int maxWidth, int maxHeigth)
         circles[i].color.alpha = 1.0 / (1 + getRandom(3));
 
         // Animation
-        circlesAnimations[i].xVelocity = getRandom(10) + 1;
-        circlesAnimations[i].yVelocity = getRandom(10) + 1;
+        circlesAnimations[i].xVelocity = getRandom(5) + 1;
+        circlesAnimations[i].yVelocity = getRandom(5) + 1;
         circlesAnimations[i].xDirection = 1 - 2 * getRandom(1);
         circlesAnimations[i].yDirection = 1 - 2 * getRandom(1);
     }
