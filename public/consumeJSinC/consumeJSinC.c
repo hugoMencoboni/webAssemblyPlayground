@@ -2,9 +2,9 @@
 #include <emscripten.h>
 
 EM_JS(int, jsFactoriel, (int n), {
-    let result = 0;
+    let result = 1;
     while (n > 0) {
-        result += n;
+        result *= n;
         n--
     }
 

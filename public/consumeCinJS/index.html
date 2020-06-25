@@ -7,6 +7,7 @@
   </head>
   <body>
     <h1>WebAssembly playground</h1>
+    <div>Cette page contient du code C exécutable en JS par le biais d'un WebAssembly.</div>
     <button onclick="fireWa()">Fire WA</button>
     <div id="waInfo"></div>
     <script>
@@ -16,7 +17,8 @@
         waInfo.innerHTML = text;
       };
 
-      Module['onRuntimeInitialized'] = () => {        
+      Module['onRuntimeInitialized'] = () => {      
+        // Récupération des fonctions C de la WA.  
         getStringAssembly = cwrap('getStr', 'string', ['string']);
         getDoubleAssembly = cwrap('getDoubleNum', 'number', ['number']);
 
