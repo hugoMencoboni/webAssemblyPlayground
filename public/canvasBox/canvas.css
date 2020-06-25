@@ -53,6 +53,10 @@ a:hover {
   color: #ff5722;
 }
 
+#popIn:focus {
+  outline: none;
+}
+
 /* Scrollbar */
 #popIn {  
   scrollbar-color: #ff5722 transparent;
