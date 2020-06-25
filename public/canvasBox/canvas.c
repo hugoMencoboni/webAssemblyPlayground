@@ -109,11 +109,31 @@ void initDrawing(int canvasWidth, int canvasHeigth)
     EM_ASM({ render($0, $1, $2); }, NUM_CIRCLES * circleStructSize, circleStructSize, colorStructSize);
 }
 
-
-struct Circle *getCircles(int canvasWidth, int canvasHeigth, int attractivePointX, int attractivePointY)
+struct Circle *getCircles(int canvasWidth, int canvasHeigth, int repulsivePointX, int repulsivePointY)
 {
     for (int i = 0; i < NUM_CIRCLES; i++)
     {
+        if (repulsivePointX != -1 && repulsivePointY != -1)
+        {
+            float influenceZone = 300;
+            float diffX = circles[i].x - repulsivePointX;
+            float diffY = circles[i].y - repulsivePointY;
+            float d = sqrt(diffX * diffX + diffY * diffY);
+
+            if (d < influenceZone)
+            {
+                if (diffX * circlesAnimations[i].xDirection < 0)
+                {
+                    circlesAnimations[i].xDirection *= -1;
+                }
+
+                if (diffY * circlesAnimations[i].yDirection < 0)
+                {
+                    circlesAnimations[i].yDirection *= -1;
+                }
+            }
+        }
+
         if (circles[i].x + circles[i].r > canvasWidth || circles[i].x - circles[i].r < 0)
         {
             circlesAnimations[i].xDirection *= -1;
@@ -123,28 +143,7 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth, int attractivePoint
         {
             circlesAnimations[i].yDirection *= -1;
         }
-
-        if (attractivePointX != -1 && attractivePointY != -1)
-        {
-            float influenceZone = 300;
-            float diffX = circles[i].x - attractivePointX;
-            float diffY = circles[i].y - attractivePointY;
-            float d = sqrt(diffX * diffX + diffY * diffY);
-
-            if (d > influenceZone)
-            {
-                if (diffX * circlesAnimations[i].xDirection > 0)
-                {
-                    circlesAnimations[i].xDirection *= -1;
-                }
-
-                if (diffY * circlesAnimations[i].yDirection > 0)
-                {
-                    circlesAnimations[i].yDirection *= -1;
-                }
-            }
-        }
-
+        
         circles[i].x += circlesAnimations[i].xVelocity * circlesAnimations[i].xDirection;
         circles[i].y += circlesAnimations[i].yVelocity * circlesAnimations[i].yDirection;
     }

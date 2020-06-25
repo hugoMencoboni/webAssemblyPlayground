@@ -5,31 +5,19 @@
   <meta charset="utf-8">
   <title>Canvas animation</title>
   <script src="canvas.js"></script>
-  <style media="screen">
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0px;
-    }
-
-    html,
-    body,
-    canvas {
-      margin: 0px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="canvas.css">
 </head>
 
 <body>
   <canvas id="canvas"></canvas>
+  <div id="popIn"></div>
   <script>
     const canvas = document.getElementById("canvas");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     const canvasCtx = canvas.getContext("2d");
-    let attractivePointX = -1;
-    let attractivePointY = -1;
+    let repulsivePointX = -1;
+    let repulsivePointY = -1;
 
     const drawCircles = (x, y, r, color) => {
       canvasCtx.beginPath();
@@ -50,13 +38,12 @@
 
     const render = (circleDataLength, circleStructSize, colorStructSize) => {
       const mainColorDatas = new Float32Array(Module.HEAP32.buffer, _getMainColor(), colorStructSize);
-      const circlesDatas = new Float32Array(Module.HEAP32.buffer, _getCircles(canvas.width, canvas.height, attractivePointX, attractivePointY), circleDataLength);
+      const circlesDatas = new Float32Array(Module.HEAP32.buffer, _getCircles(canvas.width, canvas.height, repulsivePointX, repulsivePointY), circleDataLength);
       canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 
       const backgroundColor = `rgba(${mainColorDatas[0]},${mainColorDatas[1]},${mainColorDatas[2]},${mainColorDatas[3]})`;
       drawRectangle(0, 0, canvas.width, canvas.height, backgroundColor);
 
-      drawCircles(attractivePointX, attractivePointY, 5, `blue`);
       for (let i = 0; i < circlesDatas.length; i += circleStructSize) {
         const x = circlesDatas[i];
         const y = circlesDatas[i + 1];
@@ -73,28 +60,20 @@
       });
     }
 
-    canvas.onmousemove = e => {
-      // if (attractivePointX !== e.clientX) {
-      //   attractivePointX = e.clientX;
-      // } else {
-      //   attractivePointX = -1;
-      // }
-
-
-      // if (attractivePointY !== e.clientY) {
-      //   attractivePointY = e.clientY;
-      // } else {
-      //   attractivePointY = -1;
-      // }
-
-      attractivePointX = e.clientX;
-      attractivePointY = e.clientY;
+    document.onmousemove = e => {
+      repulsivePointX = e.clientX;
+      repulsivePointY = e.clientY;
     };
 
-    canvas.onmouseout = () => {
-      attractivePointX = -1;
-      attractivePointY = -1;
+    document.onmouseout = () => {
+      repulsivePointX = -1;
+      repulsivePointY = -1;
     };
+
+    fetch('../markdownAsHtml').then(async (res) => {
+      const popIn = document.getElementById('popIn');
+      popIn.innerHTML = await res.text();
+    });
   </script>
 </body>
 
