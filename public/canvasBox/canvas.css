@@ -53,12 +53,17 @@ a:hover {
   color: #ff5722;
 }
 
-::-webkit-scrollbar {
-    width: 7px;
+/* Scrollbar */
+#popIn {  
+  scrollbar-color: #ff5722 transparent;
+  scrollbar-width: thin;
 }
 
-/* Handle */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: #ffc107;
+  border-radius: 10px;
+  background: #ffc107;
 }
