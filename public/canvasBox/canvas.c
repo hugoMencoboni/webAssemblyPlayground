@@ -14,15 +14,17 @@ struct Color
     float alpha;
 };
 
+struct HSVColor
+{
+    float h;
+    float s;
+    float v;
+};
+
 struct ColorAnimation
 {
-    int rVelocity;
-    int gVelocity;
-    int bVelocity;
-
-    int rDirection;
-    int gDirection;
-    int bDirection;
+    int hVelocity;
+    int hDirection;
 };
 
 struct Circle
@@ -45,6 +47,7 @@ struct CircleAnimation
 struct Circle circles[NUM_CIRCLES];
 struct CircleAnimation circlesAnimations[NUM_CIRCLES];
 struct Color mainColor;
+struct HSVColor mainHSVColor;
 struct ColorAnimation mainColorAnimation;
 
 int getRandom(int max)
@@ -77,20 +80,88 @@ void initCircles(int maxWidth, int maxHeigth)
     }
 }
 
+struct Color hsv2rgb(struct HSVColor color)
+{
+    float v = color.v / 100;
+    float s = color.s / 100;
+    float h = color.h;
+    float hh, p, q, t, ff, r, g, b;
+    long i;
+    struct Color result;
+
+    if (s <= 0)
+    { // < is bogus, just shuts up warnings
+        result.red = v * 255;
+        result.green = v * 255;
+        result.blue = v * 255;
+        return result;
+    }
+
+    hh = h;
+    if (hh >= 360)
+        hh = 0;
+    hh /= 60;
+    i = (long)hh;
+    ff = hh - i;
+    p = v * (1 - s);
+    q = v * (1 - (s * ff));
+    t = v * (1 - (s * (1 - ff)));
+
+    switch (i)
+    {
+    case 0:
+        r = v;
+        g = t;
+        b = p;
+        break;
+    case 1:
+        r = q;
+        g = v;
+        b = p;
+        break;
+    case 2:
+        r = p;
+        g = v;
+        b = t;
+        break;
+    case 3:
+        r = p;
+        g = q;
+        b = v;
+        break;
+    case 4:
+        r = t;
+        g = p;
+        b = v;
+        break;
+    case 5:
+    default:
+        r = v;
+        g = p;
+        b = q;
+        break;
+    }
+
+    result.red = r * 255;
+    result.green = g * 255;
+    result.blue = b * 255;
+    return result;
+}
+
 void initMainColor()
 {
-    mainColor.red = getRandom(255);
-    mainColor.green = getRandom(255);
-    mainColor.blue = getRandom(255);
+    mainHSVColor.h = getRandom(361);
+    mainHSVColor.s = 25.0;
+    mainHSVColor.v = 100.0;
+
+    struct Color convertedColor = hsv2rgb(mainHSVColor);
+    mainColor.red = convertedColor.red;
+    mainColor.green = convertedColor.green;
+    mainColor.blue = convertedColor.blue;
     mainColor.alpha = 0.5;
 
-    mainColorAnimation.rVelocity = getRandom(2);
-    mainColorAnimation.gVelocity = getRandom(2);
-    mainColorAnimation.bVelocity = getRandom(2);
-
-    mainColorAnimation.rDirection = 1;
-    mainColorAnimation.gDirection = 1;
-    mainColorAnimation.bDirection = 1;
+    mainColorAnimation.hVelocity = 1 + getRandom(2);
+    mainColorAnimation.hDirection = 1;
 }
 
 int main()
@@ -143,7 +214,7 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth, int repulsivePointX
         {
             circlesAnimations[i].yDirection *= -1;
         }
-        
+
         circles[i].x += circlesAnimations[i].xVelocity * circlesAnimations[i].xDirection;
         circles[i].y += circlesAnimations[i].yVelocity * circlesAnimations[i].yDirection;
     }
@@ -153,27 +224,18 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth, int repulsivePointX
 
 struct Color getMainColor()
 {
-    int rDecay = mainColorAnimation.rDirection * mainColorAnimation.rVelocity;
-    if (mainColor.red + rDecay < 0 || mainColor.red + rDecay > 255)
+    int hDecay = mainColorAnimation.hDirection * mainColorAnimation.hVelocity;
+    if (mainHSVColor.h + hDecay < 0 || mainHSVColor.h + hDecay > 360)
     {
-        mainColorAnimation.rDirection *= -1;
+        mainColorAnimation.hDirection *= -1;
     }
 
-    int gDecay = mainColorAnimation.gDirection * mainColorAnimation.gVelocity;
-    if (mainColor.green + gDecay < 0 || mainColor.green + gDecay > 255)
-    {
-        mainColorAnimation.gDirection *= -1;
-    }
+    mainHSVColor.h += mainColorAnimation.hVelocity * mainColorAnimation.hDirection;
 
-    int bDecay = mainColorAnimation.bDirection * mainColorAnimation.bVelocity;
-    if (mainColor.blue + bDecay < 0 || mainColor.blue + bDecay > 255)
-    {
-        mainColorAnimation.bDirection *= -1;
-    }
-
-    mainColor.red += mainColorAnimation.rDirection * mainColorAnimation.rVelocity;
-    mainColor.green += mainColorAnimation.gDirection * mainColorAnimation.gVelocity;
-    mainColor.blue += mainColorAnimation.bDirection * mainColorAnimation.bVelocity;
+    struct Color convertedColor = hsv2rgb(mainHSVColor);
+    mainColor.red = convertedColor.red;
+    mainColor.green = convertedColor.green;
+    mainColor.blue = convertedColor.blue;
 
     return mainColor;
 }
