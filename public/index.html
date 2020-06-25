@@ -76,6 +76,7 @@
       fetch(markdownPath).then(async (res) => {
         const popIn = document.getElementById('popIn');
         popIn.innerHTML = await res.text();
+        popIn.focus();
       });
     }();
   </script>
