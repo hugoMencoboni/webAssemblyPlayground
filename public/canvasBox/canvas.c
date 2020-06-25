@@ -108,7 +108,7 @@ void initDrawing(int canvasWidth, int canvasHeigth)
     EM_ASM({ render($0, $1, $2); }, NUM_CIRCLES * circleStructSize, circleStructSize, colorStructSize);
 }
 
-struct Circle *getCircles(int canvasWidth, int canvasHeigth)
+struct Circle *getCircles(int canvasWidth, int canvasHeigth, int attractivePointX, int attractivePointY)
 {
     for (int i = 0; i < NUM_CIRCLES; i++)
     {
@@ -120,6 +120,20 @@ struct Circle *getCircles(int canvasWidth, int canvasHeigth)
         if (circles[i].y + circles[i].r > canvasHeigth || circles[i].y - circles[i].r < 0)
         {
             circlesAnimations[i].yDirection *= -1;
+        }
+
+        if (attractivePointX != -1 && attractivePointY != -1)
+        {
+            float influenceZone = 200;
+            if ((circles[i].x - attractivePointX) * circlesAnimations[i].xDirection > influenceZone)
+            {
+                circlesAnimations[i].xDirection *= -1;
+            }
+
+            if ((circles[i].y - attractivePointY) * circlesAnimations[i].yDirection > influenceZone)
+            {
+                circlesAnimations[i].yDirection *= -1;
+            }
         }
 
         circles[i].x += circlesAnimations[i].xVelocity * circlesAnimations[i].xDirection;
