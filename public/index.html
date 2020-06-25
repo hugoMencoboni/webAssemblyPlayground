@@ -70,10 +70,14 @@
       repulsivePointY = -1;
     };
 
-    fetch('/markdownAsHtml').then(async (res) => {
-      const popIn = document.getElementById('popIn');
-      popIn.innerHTML = await res.text();
-    });
+    loadPopInContent = function() {
+      const local = window.location.hostname === 'localhost';
+      const markdownPath = local ? '/markdownAsHtml' : '../index.html';
+      fetch(markdownPath).then(async (res) => {
+        const popIn = document.getElementById('popIn');
+        popIn.innerHTML = await res.text();
+      });
+    }();
   </script>
 </body>
 

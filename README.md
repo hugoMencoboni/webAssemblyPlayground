@@ -1,5 +1,3 @@
-# Web assembly playground
-
 Contient :
 1. **[une page][JSinCLink]** dédiée à la consommation de JS dans du C.
 1. **[une page][CinJSLink]** dédiée à la consommation de C dans du JS.
