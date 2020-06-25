@@ -1,11 +1,11 @@
 # Web assembly playground
 
 Contient :
-1. un dossier pour la consommation de JS dans du C.
-1. un dossier pour la consommation de C dans du JS.
-1. un dossier pour la consommation de WASM sans l'utilisation d'**[emscripten][emscriptenLink]**.
-1. un dossier comparant les performances entre JS et WebAssembly.
-1. un petit projet d'animation de formes via canvas mélangeant JS et WA.
+1. **[une page][JSinCLink]** dédiée à la consommation de JS dans du C.
+1. **[une page][CinJSLink]** dédiée à la consommation de C dans du JS.
+1. **[une page][WASMLink]** dédiée à la consommation de WASM sans l'utilisation d'**[emscripten][emscriptenLink]**.
+1. **[une page][PerfLink]** dédiée à la comparaison de performances entre JS et WebAssembly.
+1. **[une page][CanvasLink]** dédiée à l'animation de formes via canvas mélangeant JS et WA.
 
 ## Mise en place
 
@@ -27,7 +27,7 @@ avec :
 - `file.c` le fichier C à convertir.
 - `file.js` le nom du fichier JS qui sera généré et consommé.
 - `f1` le nom des functions C à exporter (y ajouter le caractère `_`).
-- `O1` un facteur de compression (non négligeable pour réduire la taille du WASM qui passera sur le réseau).
+- `On` un facteur de compression (non négligeable pour réduire la taille du WASM qui passera sur le réseau).
 - `f1` le nom des functions C à exporter (y ajouter le caractère `_`).
 
 ## Interet
@@ -38,6 +38,12 @@ Les WA apportent plusieurs interet :
 - elles peuvent donner accès à de meilleurs performances lors de calculs numériques.
 
 Pour plus de détail : **[WebAssembly: How and why][webassemblyLink]**.
+
+[JSinCLink]: https://hugomencoboni.github.io/webassemblyplayground/consumeCinJS/index.html
+[CinJSLink]: https://hugomencoboni.github.io/webassemblyplayground/consumeJSinC/index.html
+[WASMLink]: https://hugomencoboni.github.io/webassemblyplayground/consumeWithoutEmscripten/index.html
+[PerfLink]: https://hugomencoboni.github.io/webassemblyplayground/fibonacci/index.html
+[CanvasLink]: https://hugomencoboni.github.io/webassemblyplayground/canvasBox/index.html
 
 [emscriptenLink]: https://emscripten.org/docs/getting_started/downloads.html
 [emscriptenInstallLink]: https://emscripten.org/docs/getting_started/downloads.html
