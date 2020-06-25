@@ -44,6 +44,14 @@ h2, h3 {
   color: #ff5722;
 }
 
+a {
+  color: #ffc107;
+}
+
+a:hover {
+  color: #ff5722;
+}
+
 ::-webkit-scrollbar {
     width: 7px;
 }
